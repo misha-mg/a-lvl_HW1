@@ -42,8 +42,6 @@ let arr2 = [];
 
 for(let i = 0; i < 100; i++) {
     let alphabet = "abcdefghijklmnopqrstuvwxyz";
-    // let randomIndex = getRandomInt(alphabet.length);
-    // // arr2[i] = alphabet[randomIndex];
     let randomStr = '';
     for (let i = 0; i <= 4; i++) {
         randomStr += alphabet[getRandomInt(alphabet.length)];
