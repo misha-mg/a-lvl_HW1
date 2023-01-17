@@ -21,10 +21,12 @@ for(let i = 0; i < 100; i++) {
 // console.log(arr1);
 
 function sort1(arr) {
-   let sortArr = arr.filter(num => num > 50).sort();
-   return sortArr
+    let sortArr = arr.slice(0);
+    sortArr = arr.filter(num => num > 50).sort((a, b) => a - b);
+    return sortArr
 }
 // console.log(sort1(arr1));
+
 
 
 // 2. 
@@ -50,8 +52,8 @@ for(let i = 0; i < 100; i++) {
 }
 
 function sort2(arr){
-    let arrObj = [];
-    let arrSort = arr.sort();
+    let arrObj = arr.slice(0);
+    let arrSort = arrObj.sort();
 
     arrSort.forEach(function(item, i) {
         arrObj[i] = {value: `${item}`}
@@ -63,11 +65,12 @@ function sort2(arr){
 
 
 
+
 // 3.
 // Компанія розробляє календар зайнятості своїх співробітників. Календар зберігається у форматі об'єктов з властивостями:
 // startTime (час початку, коли співробітник зайнятий) та endTime (час закінчення, коли співробітник зайнятий) - число з точністю до 30 хвилин, де 
-//   0 - це час, який дорівнює 00:00 
-//   1 - це час, який дорівнює 00:30 
+//   0 - це час, який дорівнює 00:00
+//   1 - це час, який дорівнює 00:30
 //   2 - це час, який дорівнює 01:00
 //   3 - це час, який дорівнює 01:30
 // і так далі.
@@ -95,20 +98,33 @@ let time = [
     { startTime: 3, endTime: 5 },
     { startTime: 4, endTime: 8 },
     { startTime: 10, endTime: 12 },
-    { startTime: 9, endTime: 10 }
+    { startTime: 9, endTime: 10 },
   ]
 
-function mergeRanges(graph) {
+function mergeRanges(originalGraph) {
 
+    let graph = originalGraph.slice(0);
     graph = graph.sort((a, b) => a.startTime > b.startTime ? 1 : -1);
 
     let newTime = [];
 
-    for (let i = 0; i < graph.length - 1; i++) {
+    for (let i = 0; i <= graph.length - 1; i++) {
 
         let obj = {
             startTime: 0,
             endTime: 0
+        }
+
+        if(typeof graph[i + 1] == 'undefined') {
+            obj.startTime = graph[i].startTime;
+            obj.endTime = graph[i].endTime;
+            newTime.push(obj);
+            console.log(newTime);
+            return newTime
+        }
+
+        if(i == graph.length - 1) {
+            time.push(time[time.length - 1]);
         }
 
         if(graph[i].endTime < graph[i + 1].startTime) {
@@ -121,9 +137,11 @@ function mergeRanges(graph) {
         } else if(graph[i].endTime >= graph[i + 1].endTime) {
             obj.endTime = graph[i].endTime;
         }
+
         newTime.push(obj);
+        
     }
-    // console.log(newTime);
+    console.log(newTime);
     return newTime
 }
 mergeRanges(time);
